@@ -1,0 +1,66 @@
+package main
+
+import (
+	"fmt"
+	"os"
+
+	log "main/Log"
+	simpleerror "main/Log/SimpleErorr"
+	richerorr "main/RichErorr"
+	"strconv"
+)
+
+type User struct {
+	ID   int
+	Name string
+}
+
+func main() {
+	logger := log.Log{}
+	_, OErr := os.OpenFile("./storage/data.txt", os.O_RDWR, 0777)
+	if OErr != nil {
+		logger.Append(OErr)
+		fmt.Println(OErr.Error())
+	}
+	u := User{
+		ID:   1,
+		Name: "kobe",
+	}
+	fmt.Println(u)
+	_, gerr := getUserById(0)
+	if gerr != nil {
+		logger.Append(gerr)
+		fmt.Println(gerr.Error())
+	}
+
+	_, g2Err := getUserByIdTwo(0)
+	if g2Err != nil {
+		logger.Append(g2Err)
+		fmt.Println(g2Err.Error())
+	}
+	logger.Save()
+	fmt.Scan()
+
+}
+
+func getUserById(id int) (User, error) {
+	if id == 0 {
+		return User{}, &richerorr.RichError{
+			Message: "id not valid",
+			MetaData: map[string]string{
+				"id": strconv.Itoa(id),
+			},
+			Operation: "getUserById",
+		}
+	}
+	return User{}, nil
+}
+func getUserByIdTwo(id int) (User, error) {
+	if id == 0 {
+		return User{}, &simpleerror.SimpleError{
+			Output:    "id not valid",
+			Operation: "getUserById two",
+		}
+	}
+	return User{}, nil
+}
