@@ -1,0 +1,1 @@
+[{"Message":"open ./storage/data.txt: no such file or directory","MetaData":null,"Operation":"unknown","Time":"2024-11-12T11:50:09.926064+03:30"},{"Message":"id not valid","MetaData":{"id":"0"},"Operation":"getUserById","Time":"0001-01-01T00:00:00Z"},{"Message":"id not valid","MetaData":null,"Operation":"getUserById two","Time":"2024-11-12T11:50:09.926216+03:30"}]
